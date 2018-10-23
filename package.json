@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "nodemon ./bin/www",
     "start": "node ./bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha './test/**/*.spec.js'"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,10 @@
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-http": "^4.2.0",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.4"
   }
 }
