@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('/main/auth/passport-configs');
 const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');

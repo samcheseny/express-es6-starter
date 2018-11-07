@@ -18,6 +18,18 @@ describe('Testing UsersController', () => {
 
     });
 
+    describe('create', () => {
+
+        it('should create a user', () => {
+
+        });
+
+        it('should not create user if errors exist', () => {
+
+        });
+
+    });
+
     afterEach('Do something after each test', () => {
 
     });

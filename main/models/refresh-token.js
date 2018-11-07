@@ -1,6 +1,6 @@
 const {Sequelize} = require('sequelize');
 
-class User extends Sequelize.Model {
+class RefreshToken extends Sequelize.Model {
 
     constructor() {
         super();
@@ -14,16 +14,20 @@ class User extends Sequelize.Model {
                     allowNull: false,
                     primaryKey: true
                 },
-                name: {
-                    type: DataTypes.STRING,
+                userID: {
+                    type: DataTypes.UUID,
                     allowNull: true
                 },
-                email: {
+                clientID: {
+                    type: DataTypes.UUID,
+                    allowNull: false
+                },
+                token: {
                     type: DataTypes.STRING,
                     allowNull: false
                 },
-                password: {
-                    type: DataTypes.STRING,
+                revoked: {
+                    type: DataTypes.BOOLEAN,
                     allowNull: false
                 },
                 created_at: {
@@ -36,12 +40,11 @@ class User extends Sequelize.Model {
                 }
             },
             {
-                tableName: "users",
+                tableName: "refresh_tokens",
                 sequelize
             }
         )
     }
-
 }
 
-module.exports = new User();
+module.exports = new RefreshToken();

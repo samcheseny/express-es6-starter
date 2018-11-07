@@ -1,6 +1,6 @@
 const {Sequelize} = require('sequelize');
 
-class User extends Sequelize.Model {
+class Client extends Sequelize.Model {
 
     constructor() {
         super();
@@ -18,12 +18,12 @@ class User extends Sequelize.Model {
                     type: DataTypes.STRING,
                     allowNull: true
                 },
-                email: {
+                secret: {
                     type: DataTypes.STRING,
                     allowNull: false
                 },
-                password: {
-                    type: DataTypes.STRING,
+                revoked: {
+                    type: DataTypes.BOOLEAN,
                     allowNull: false
                 },
                 created_at: {
@@ -36,7 +36,7 @@ class User extends Sequelize.Model {
                 }
             },
             {
-                tableName: "users",
+                tableName: "clients",
                 sequelize
             }
         )
@@ -44,4 +44,4 @@ class User extends Sequelize.Model {
 
 }
 
-module.exports = new User();
+module.exports = new Client();

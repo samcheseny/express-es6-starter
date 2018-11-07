@@ -1,9 +1,9 @@
 const router = require('express').Router();
-
+const passport = require('passport');
 const {UsersController} = require('../controllers');
 
-router.get('/', UsersController.getAll);
+router.get('/', passport.authenticate('bearer', {session: false}), UsersController.getAll);
 
-router.post('/', UsersController.create);
+router.post('/', passport.authenticate('bearer', {session: false}), UsersController.create);
 
 module.exports = router;
