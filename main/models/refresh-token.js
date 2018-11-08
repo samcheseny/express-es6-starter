@@ -1,4 +1,5 @@
 const {Sequelize} = require('sequelize');
+const utils = require('../utils');
 
 class RefreshToken extends Sequelize.Model {
 
@@ -9,34 +10,48 @@ class RefreshToken extends Sequelize.Model {
     static init(sequelize, DataTypes) {
         return super.init(
             {
-                uuid: {
+                id: {
                     type: DataTypes.UUID,
                     allowNull: false,
-                    primaryKey: true
+                    primaryKey: true,
+                    defaultValue: () => utils.generateUUID()
                 },
                 userID: {
                     type: DataTypes.UUID,
-                    allowNull: true
+                    allowNull: true,
+                    validate: {
+                        isUUID: true,
+                    }
                 },
                 clientID: {
                     type: DataTypes.UUID,
-                    allowNull: false
+                    allowNull: false,
+                    validate: {
+                       isUUID: true,
+                    }
                 },
-                token: {
+                refreshToken: {
                     type: DataTypes.STRING,
-                    allowNull: false
+                    allowNull: false,
+                    validate: {
+                        notNull: true,
+                        notEmpty: true,
+                    }
                 },
                 revoked: {
                     type: DataTypes.BOOLEAN,
-                    allowNull: false
+                    allowNull: false,
+                    defaultValue: false
                 },
                 created_at: {
                     type: DataTypes.DATE,
-                    allowNull: false
+                    allowNull: false,
+                    defaultValue: DataTypes.NOW
                 },
                 updated_at: {
-                    type: DataTypes.NOW,
-                    allowNull: false
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                    defaultValue: DataTypes.NOW
                 }
             },
             {

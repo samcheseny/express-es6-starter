@@ -1,4 +1,5 @@
 const {User} = require('../models');
+const bcrypt = require('bcryptjs');
 
 class UsersController {
 
@@ -8,19 +9,33 @@ class UsersController {
             .catch(error => response.status(400).send(error));
     }
 
-    create(request, response) {
-        let user = {
-            userName: request.body.userName,
-            password: request.body.password,
-        };
+    register(request, response) {
 
-        return User.create(user)
-            .then(user => response.status(201).json(user))
-            .catch(error => response.status(400).send(error));
-    }
+        bcrypt.genSalt(10, (error, salt) => {
 
-    login(request, response) {
+            if (error) {
+                return response.status(400).send(error);
+            }
 
+            bcrypt.hash(request.body.password, salt, (error, hash) => {
+
+                if (error) {
+                    return response.status(400).send(error);
+                }
+
+                let user = {
+                    name: request.body.name,
+                    email: request.body.email,
+                    password: hash,
+                };
+
+                return User.create(user)
+                    .then(user => response.status(201).json(user))
+                    .catch(error => response.status(400).send(error));
+
+            });
+
+        });
     }
 
 }

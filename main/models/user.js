@@ -1,4 +1,5 @@
 const {Sequelize} = require('sequelize');
+const utils = require('../utils');
 
 class User extends Sequelize.Model {
 
@@ -9,30 +10,46 @@ class User extends Sequelize.Model {
     static init(sequelize, DataTypes) {
         return super.init(
             {
-                uuid: {
+                id: {
                     type: DataTypes.UUID,
                     allowNull: false,
-                    primaryKey: true
+                    primaryKey: true,
+                    defaultValue: () => utils.generateUUID()
                 },
                 name: {
                     type: DataTypes.STRING,
-                    allowNull: true
+                    allowNull: true,
+                    validate: {
+                        is: /^[a-z]+$/i,
+                        notNull: true,
+                        notEmpty: true,
+                    }
                 },
                 email: {
                     type: DataTypes.STRING,
-                    allowNull: false
+                    allowNull: false,
+                    validate:{
+                        isEmail: true,
+                        notNull: true,
+                        notEmpty: true,
+                    }
                 },
                 password: {
                     type: DataTypes.STRING,
-                    allowNull: false
+                    allowNull: false,
+                    get() {
+                        return () => this.getDataValue('password');
+                    }
                 },
                 created_at: {
                     type: DataTypes.DATE,
-                    allowNull: false
+                    allowNull: false,
+                    defaultValue: DataTypes.NOW
                 },
                 updated_at: {
-                    type: DataTypes.NOW,
-                    allowNull: false
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                    defaultValue: DataTypes.NOW
                 }
             },
             {

@@ -4,6 +4,4 @@ const {UsersController} = require('../controllers');
 
 router.get('/', passport.authenticate('bearer', {session: false}), UsersController.getAll);
 
-router.post('/', passport.authenticate('bearer', {session: false}), UsersController.create);
-
 module.exports = router;

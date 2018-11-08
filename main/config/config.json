@@ -1,23 +1,26 @@
 {
   "development": {
-    "username": "root",
+    "username": "express",
     "password": null,
-    "database": "database_development",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "database": "express",
+    "host": "192.168.250.235",
+    "dialect": "postgres",
+    "timezone":"Africa/Nairobi"
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "timezone":"Africa/Nairobi"
   },
   "production": {
     "username": "root",
     "password": null,
     "database": "database_production",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "timezone":"Africa/Nairobi"
   }
 }
