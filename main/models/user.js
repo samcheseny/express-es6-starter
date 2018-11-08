@@ -16,9 +16,17 @@ class User extends Sequelize.Model {
                     primaryKey: true,
                     defaultValue: () => utils.generateUUID()
                 },
+                clientID: {
+                    type: DataTypes.UUID,
+                    allowNull: false,
+                    field: 'client_id',
+                    validate: {
+                        isUUID: 4
+                    }
+                },
                 name: {
                     type: DataTypes.STRING,
-                    allowNull: true,
+                    allowNull: false,
                     validate: {
                         is: /^[a-z]+$/i,
                         notNull: true,
@@ -41,15 +49,17 @@ class User extends Sequelize.Model {
                         return () => this.getDataValue('password');
                     }
                 },
-                created_at: {
+                createdAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW
+                    defaultValue: DataTypes.NOW,
+                    field:'created_at'
                 },
-                updated_at: {
+                updatedAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW
+                    defaultValue: DataTypes.NOW,
+                    field:'updated_at'
                 }
             },
             {

@@ -19,6 +19,8 @@ class RefreshToken extends Sequelize.Model {
                 userID: {
                     type: DataTypes.UUID,
                     allowNull: true,
+                    field: 'user_id',
+                    references: {model: 'users', key: 'id'},
                     validate: {
                         isUUID: true,
                     }
@@ -26,13 +28,16 @@ class RefreshToken extends Sequelize.Model {
                 clientID: {
                     type: DataTypes.UUID,
                     allowNull: false,
+                    field: 'client_id',
+                    references: {model: 'clients', key: 'id'},
                     validate: {
-                       isUUID: true,
+                        isUUID: true,
                     }
                 },
                 refreshToken: {
                     type: DataTypes.STRING,
                     allowNull: false,
+                    field: 'refresh_token',
                     validate: {
                         notNull: true,
                         notEmpty: true,
@@ -43,15 +48,17 @@ class RefreshToken extends Sequelize.Model {
                     allowNull: false,
                     defaultValue: false
                 },
-                created_at: {
+                createdAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW
+                    defaultValue: DataTypes.NOW,
+                    field: 'created_at'
                 },
-                updated_at: {
+                updatedAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW
+                    defaultValue: DataTypes.NOW,
+                    field: 'updated_at'
                 }
             },
             {

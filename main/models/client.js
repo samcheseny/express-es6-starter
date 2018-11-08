@@ -37,15 +37,17 @@ class Client extends Sequelize.Model {
                     allowNull: false,
                     defaultValue: false
                 },
-                created_at: {
+                createdAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW
+                    defaultValue: DataTypes.NOW,
+                    field:'created_at'
                 },
-                updated_at: {
+                updatedAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW
+                    defaultValue: DataTypes.NOW,
+                    field:'updated_at'
                 }
             },
             {

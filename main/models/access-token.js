@@ -19,6 +19,8 @@ class AccessToken extends Sequelize.Model {
                 userID: {
                     type: DataTypes.UUID,
                     allowNull: true,
+                    field: 'user_id',
+                    references: {model: 'users', key: 'id'},
                     validate: {
                         isUUID: 4
                     }
@@ -26,6 +28,8 @@ class AccessToken extends Sequelize.Model {
                 clientID: {
                     type: DataTypes.UUID,
                     allowNull: false,
+                    field: 'client_id',
+                    references: {model: 'clients', key: 'id'},
                     validate: {
                         isUUID: 4
                     }
@@ -40,7 +44,8 @@ class AccessToken extends Sequelize.Model {
                 },
                 expirationDate: {
                     type: DataTypes.DATE,
-                    allowNull: false
+                    allowNull: false,
+                    field: 'expiration_date'
                 },
                 scope: {
                     type: DataTypes.STRING,
@@ -51,15 +56,17 @@ class AccessToken extends Sequelize.Model {
                     allowNull: false,
                     defaultValue: false
                 },
-                created_at: {
+                createdAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW
+                    defaultValue: DataTypes.NOW,
+                    field: 'created_at'
                 },
-                updated_at: {
+                updatedAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW
+                    defaultValue: DataTypes.NOW,
+                    field: 'updated_at'
                 }
             },
             {

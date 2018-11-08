@@ -26,6 +26,7 @@ class UsersController {
                 let user = {
                     name: request.body.name,
                     email: request.body.email,
+                    clientID: request.body.clientID,
                     password: hash,
                 };
 
