@@ -36,7 +36,7 @@ class User extends Sequelize.Model {
                 email: {
                     type: DataTypes.STRING,
                     allowNull: false,
-                    validate:{
+                    validate: {
                         isEmail: true,
                         notNull: true,
                         notEmpty: true,
@@ -53,13 +53,13 @@ class User extends Sequelize.Model {
                     type: DataTypes.DATE,
                     allowNull: false,
                     defaultValue: DataTypes.NOW,
-                    field:'created_at'
+                    field: 'created_at'
                 },
                 updatedAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
                     defaultValue: DataTypes.NOW,
-                    field:'updated_at'
+                    field: 'updated_at'
                 }
             },
             {
@@ -67,6 +67,25 @@ class User extends Sequelize.Model {
                 sequelize
             }
         )
+    }
+
+    static associate(models) {
+
+        this.client = this.belongsTo(models.Client, {
+            foreignKey: 'client_id',
+            onDelete: 'CASCADE'
+        });
+
+        this.accessTokens = this.hasMany(models.AccessToken, {
+            foreignKey: 'user_id',
+            as: 'accessTokens'
+        });
+
+        this.refreshTokens = this.hasMany(models.RefreshToken, {
+            foreignKey: 'user_id',
+            as: 'refreshTokens'
+        });
+
     }
 
 }

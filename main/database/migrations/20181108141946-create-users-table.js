@@ -12,8 +12,9 @@ module.exports = {
             clientID: {
                 type: Sequelize.UUID,
                 allowNull: false,
+                onDelete: 'CASCADE',
                 field: 'client_id',
-                references: {model: 'clients', key: 'id'}
+                references: {model: 'clients', key: 'id', as: 'client_id'}
             },
             name: {
                 type: Sequelize.STRING,

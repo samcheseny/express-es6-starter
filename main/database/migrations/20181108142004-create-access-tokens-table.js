@@ -12,14 +12,16 @@ module.exports = {
             userID: {
                 type: Sequelize.UUID,
                 allowNull: true,
+                onDelete: 'CASCADE',
                 field: 'user_id',
-                references: {model: 'users', key: 'id'}
+                references: {model: 'users', key: 'id', as: 'user_id'}
             },
             clientID: {
                 type: Sequelize.UUID,
                 allowNull: false,
+                onDelete: 'CASCADE',
                 field: 'client_id',
-                references: {model: 'clients', key: 'id'}
+                references: {model: 'clients', key: 'id', as: 'client_id'}
             },
             token: {
                 type: Sequelize.STRING,

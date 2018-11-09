@@ -32,7 +32,7 @@ class Client extends Sequelize.Model {
                         notEmpty: true,
                     }
                 },
-                revoked: {
+                active: {
                     type: DataTypes.BOOLEAN,
                     allowNull: false,
                     defaultValue: false
@@ -41,13 +41,13 @@ class Client extends Sequelize.Model {
                     type: DataTypes.DATE,
                     allowNull: false,
                     defaultValue: DataTypes.NOW,
-                    field:'created_at'
+                    field: 'created_at'
                 },
                 updatedAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
                     defaultValue: DataTypes.NOW,
-                    field:'updated_at'
+                    field: 'updated_at'
                 }
             },
             {
@@ -55,6 +55,25 @@ class Client extends Sequelize.Model {
                 sequelize
             }
         )
+    }
+
+    static associate(models) {
+
+        this.users = this.hasMany(models.User, {
+            foreignKey: 'client_id',
+            as: 'users'
+        });
+
+        this.accessTokens = this.hasMany(models.AccessToken, {
+            foreignKey: 'client_id',
+            as: 'accessTokens'
+        });
+
+        this.refreshTokens = this.hasMany(models.RefreshToken, {
+            foreignKey: 'client_id',
+            as: 'refreshTokens'
+        });
+
     }
 
 }

@@ -7,9 +7,9 @@ const utils = require('../utils/index');
 const server = oauth2orize.createServer();
 
 // Resource Owner Password
-server.exchange(oauth2orize.exchange.password((client, email, password, scope, done) => {
+server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
 
-    User.findOne({where: {email: email}})
+    User.findOne({where: {email: username}})
         .then(user => {
 
             if (!user) {
@@ -47,9 +47,9 @@ server.exchange(oauth2orize.exchange.password((client, email, password, scope, d
                             };
 
                             RefreshToken.create(refreshTokenObject)
-                                .then(createdRefreshToken => {
-                                    return done(null, token, refreshToken, {expires_in: expirationDate});
-                                })
+                                .then(createdRefreshToken =>
+                                    done(null, token, refreshToken, {expires_in: expirationDate})
+                                )
                                 .catch(error => done(error));
 
                         })
@@ -66,7 +66,7 @@ server.exchange(oauth2orize.exchange.refreshToken((client, refreshToken, scope, 
 
     let refreshTokenHash = crypto.createHash('sha1').update(refreshToken).digest('hex');
 
-    RefreshToken.findOne({where: {refreshToken: refreshTokenHash}})
+    RefreshToken.findOne({where: {refreshToken: refreshTokenHash, revoked: false}})
         .then(token => {
 
             if (!token) {
@@ -79,7 +79,7 @@ server.exchange(oauth2orize.exchange.refreshToken((client, refreshToken, scope, 
 
             AccessToken.update(
                 {token: accessTokenHash, scope: scope, expirationDate: expirationDate},
-                {returning: true, where: {userID: token.userID}}
+                {returning: true, plain: true, where: {userID: token.userID}}
             )
                 .then(token => done(null, newAccessToken, refreshToken, {expires_in: expirationDate}))
                 .catch(error => done(error));

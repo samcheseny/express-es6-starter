@@ -67,6 +67,20 @@ class RefreshToken extends Sequelize.Model {
             }
         )
     }
+
+    static associate(models) {
+
+        this.client = this.belongsTo(models.Client, {
+            foreignKey: 'client_id',
+            onDelete: 'CASCADE',
+        });
+
+        this.user = this.belongsTo(models.User, {
+            foreignKey: 'user_id',
+            onDelete: 'CASCADE',
+        });
+
+    }
 }
 
 module.exports = new RefreshToken();

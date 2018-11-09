@@ -1,5 +1,3 @@
-const UsersController = require('../../main/controllers/users-controller');
-
 describe('Testing Users Routes', () => {
 
     beforeEach('Do something before each test', () => {
@@ -14,11 +12,7 @@ describe('Testing Users Routes', () => {
                 response.should.have.status(200);
                 response.should.be.json;
                 done();
-            })
-
-    });
-
-    it('should add a new user', () => {
+            });
 
     });
 

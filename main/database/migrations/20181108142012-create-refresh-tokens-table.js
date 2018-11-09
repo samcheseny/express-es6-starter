@@ -5,40 +5,44 @@ module.exports = {
 
         return queryInterface.createTable('refresh-tokens', {
             id: {
-                type: DataTypes.UUID,
+                type: Sequelize.UUID,
                 allowNull: false,
                 primaryKey: true
             },
             userID: {
-                type: DataTypes.UUID,
+                type: Sequelize.UUID,
                 allowNull: true,
-                field: 'user_id'
+                onDelete: 'CASCADE',
+                field: 'user_id',
+                references: {model: 'users', key: 'id', as: 'user_id'}
             },
             clientID: {
-                type: DataTypes.UUID,
+                type: Sequelize.UUID,
                 allowNull: false,
-                field: 'client_id'
+                onDelete: 'CASCADE',
+                field: 'client_id',
+                references: {model: 'clients', key: 'id', as: 'client_id'}
             },
             refreshToken: {
-                type: DataTypes.STRING,
+                type: Sequelize.STRING,
                 allowNull: false,
                 field: 'refresh_token'
             },
             revoked: {
-                type: DataTypes.BOOLEAN,
+                type: Sequelize.BOOLEAN,
                 allowNull: false,
                 defaultValue: false
             },
             createdAt: {
-                type: DataTypes.DATE,
+                type: Sequelize.DATE,
                 allowNull: false,
-                defaultValue: DataTypes.NOW,
+                defaultValue: Sequelize.NOW,
                 field: 'created_at'
             },
             updatedAt: {
-                type: DataTypes.DATE,
+                type: Sequelize.DATE,
                 allowNull: false,
-                defaultValue: DataTypes.NOW,
+                defaultValue: Sequelize.NOW,
                 field: 'updated_at'
             }
         });

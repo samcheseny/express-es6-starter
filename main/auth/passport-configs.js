@@ -8,7 +8,7 @@ passport.use("bearer", new Strategy(
 
         let tokenHash = crypto.createHash('sha1').update(token).digest('hex');
 
-        AccessToken.findOne({where: {token: tokenHash}})
+        AccessToken.findOne({where: {token: tokenHash, revoked: false}})
             .then(accessToken => {
 
                 if (!accessToken || new Date() > accessToken.expirationDate) {

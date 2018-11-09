@@ -1,4 +1,3 @@
-require('moment').tz.setDefault(process.env.TIMEZONE);
 require('dotenv').config();
 require('/main/auth/passport-configs');
 const createError = require('http-errors');
