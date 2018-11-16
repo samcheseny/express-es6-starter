@@ -83,4 +83,4 @@ class RefreshToken extends Sequelize.Model {
     }
 }
 
-module.exports = new RefreshToken();
+module.exports = RefreshToken;

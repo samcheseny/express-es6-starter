@@ -91,4 +91,4 @@ class AccessToken extends Sequelize.Model {
     }
 }
 
-module.exports = new AccessToken();
+module.exports = AccessToken;

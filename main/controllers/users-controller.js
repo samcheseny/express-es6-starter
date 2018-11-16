@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 class UsersController {
 
     getAll(request, response) {
-        return User.all()
+        return User.findAll()
             .then(users => response.status(200).json(users))
             .catch(error => response.status(400).send(error));
     }

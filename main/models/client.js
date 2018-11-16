@@ -78,4 +78,4 @@ class Client extends Sequelize.Model {
 
 }
 
-module.exports = new Client();
+module.exports = Client;
