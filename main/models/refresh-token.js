@@ -15,7 +15,7 @@ class RefreshToken extends Sequelize.Model {
                     allowNull: true,
                     field: 'user_id',
                     validate: {
-                        isUUID: true,
+                        isUUID: 4,
                     }
                 },
                 clientID: {
@@ -23,7 +23,7 @@ class RefreshToken extends Sequelize.Model {
                     allowNull: false,
                     field: 'client_id',
                     validate: {
-                        isUUID: true,
+                        isUUID: 4,
                     }
                 },
                 refreshToken: {
@@ -51,7 +51,7 @@ class RefreshToken extends Sequelize.Model {
                 }
             },
             {
-                tableName: "refresh_tokens",
+                tableName: "refresh-tokens",
                 sequelize
             }
         )

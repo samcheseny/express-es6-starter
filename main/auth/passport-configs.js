@@ -1,9 +1,31 @@
 const passport = require('passport');
-const {Strategy} = require('passport-http-bearer');
-const {AccessToken, User} = require('../models');
+const BearerStrategy = require('passport-http-bearer').Strategy;
+const ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy;
+const {AccessToken, Client, User} = require('../models');
 const crypto = require('crypto');
 
-passport.use("bearer", new Strategy(
+passport.use("clientPassword", new ClientPasswordStrategy(
+    (client_id, client_secret, done) => {
+
+        Client.findByPk(client_id)
+            .then(client => {
+
+                if (!client || !client.active) {
+                    return done(null, false);
+                }
+
+                if (client.secret === client_secret) {
+                    return done(null, client);
+                }
+
+                return done(null, false);
+
+            })
+            .catch(error => done(error))
+    }
+));
+
+passport.use("bearer", new BearerStrategy(
     (token, done) => {
 
         let tokenHash = crypto.createHash('sha1').update(token).digest('hex');

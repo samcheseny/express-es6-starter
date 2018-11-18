@@ -3,6 +3,7 @@ const {AccessToken, RefreshToken, User} = require('../models/index');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const utils = require('../utils/index');
+const passport = require('passport');
 
 const server = oauth2orize.createServer();
 
@@ -11,6 +12,8 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
 
     User.findOne({where: {email: username}})
         .then(user => {
+
+            console.log(client);
 
             if (!user) {
                 return done(null, false);
@@ -33,7 +36,7 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
                         id: utils.generateUUID(),
                         token: tokenHash,
                         expirationDate: expirationDate,
-                        clientID: client.clientID,
+                        clientID: client.id,
                         userID: user.id,
                         scope: scope
                     });
@@ -44,7 +47,7 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
                             let newRefreshToken = new RefreshToken({
                                 id: utils.generateUUID(),
                                 refreshToken: refreshTokenHash,
-                                clientID: client.clientID,
+                                clientID: client.id,
                                 userID: user.id
                             });
 
@@ -92,6 +95,7 @@ server.exchange(oauth2orize.exchange.refreshToken((client, refreshToken, scope, 
 
 // Token endpoint
 exports.token = [
+    passport.authenticate('clientPassword', {session: false}),
     server.token(),
     server.errorHandler()
 ];

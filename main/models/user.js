@@ -37,10 +37,7 @@ class User extends Sequelize.Model {
                 },
                 password: {
                     type: DataTypes.STRING,
-                    allowNull: false,
-                    get() {
-                        return () => this.getDataValue('password');
-                    }
+                    allowNull: false
                 },
                 createdAt: {
                     type: DataTypes.DATE,
