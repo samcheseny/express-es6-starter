@@ -1,11 +1,6 @@
 const {Sequelize} = require('sequelize');
-const utils = require('../utils');
 
 class RefreshToken extends Sequelize.Model {
-
-    constructor() {
-        super();
-    }
 
     static init(sequelize, DataTypes) {
         return super.init(
@@ -13,14 +8,12 @@ class RefreshToken extends Sequelize.Model {
                 id: {
                     type: DataTypes.UUID,
                     allowNull: false,
-                    primaryKey: true,
-                    defaultValue: () => utils.generateUUID()
+                    primaryKey: true
                 },
                 userID: {
                     type: DataTypes.UUID,
                     allowNull: true,
                     field: 'user_id',
-                    references: {model: 'users', key: 'id'},
                     validate: {
                         isUUID: true,
                     }
@@ -29,7 +22,6 @@ class RefreshToken extends Sequelize.Model {
                     type: DataTypes.UUID,
                     allowNull: false,
                     field: 'client_id',
-                    references: {model: 'clients', key: 'id'},
                     validate: {
                         isUUID: true,
                     }
@@ -39,7 +31,6 @@ class RefreshToken extends Sequelize.Model {
                     allowNull: false,
                     field: 'refresh_token',
                     validate: {
-                        notNull: true,
                         notEmpty: true,
                     }
                 },
@@ -51,13 +42,11 @@ class RefreshToken extends Sequelize.Model {
                 createdAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW,
                     field: 'created_at'
                 },
                 updatedAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW,
                     field: 'updated_at'
                 }
             },
@@ -71,13 +60,15 @@ class RefreshToken extends Sequelize.Model {
     static associate(models) {
 
         this.client = this.belongsTo(models.Client, {
-            foreignKey: 'client_id',
+            foreignKey: 'clientID',
             onDelete: 'CASCADE',
+            as: 'client'
         });
 
         this.user = this.belongsTo(models.User, {
-            foreignKey: 'user_id',
+            foreignKey: 'userID',
             onDelete: 'CASCADE',
+            as: 'user'
         });
 
     }

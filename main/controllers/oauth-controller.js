@@ -29,24 +29,26 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
                     let refreshTokenHash = crypto.createHash('sha1').update(refreshToken).digest('hex');
                     let expirationDate = new Date(new Date().getTime() + (3600 * 1000));
 
-                    let accessTokenObject = {
+                    let newAccessToken = new AccessToken({
+                        id: utils.generateUUID(),
                         token: tokenHash,
                         expirationDate: expirationDate,
                         clientID: client.clientID,
-                        userID: user.uuid,
+                        userID: user.id,
                         scope: scope
-                    };
+                    });
 
-                    AccessToken.create(accessTokenObject)
+                    newAccessToken.save()
                         .then(createdAccessToken => {
 
-                            let refreshTokenObject = {
+                            let newRefreshToken = new RefreshToken({
+                                id: utils.generateUUID(),
                                 refreshToken: refreshTokenHash,
                                 clientID: client.clientID,
-                                userID: user.uuid
-                            };
+                                userID: user.id
+                            });
 
-                            RefreshToken.create(refreshTokenObject)
+                            newRefreshToken.save()
                                 .then(createdRefreshToken =>
                                     done(null, token, refreshToken, {expires_in: expirationDate})
                                 )

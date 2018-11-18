@@ -3,7 +3,7 @@
 module.exports = {
     up: (queryInterface, Sequelize) => {
 
-        return queryInterface.createTable('refresh-tokens', {
+        return queryInterface.createTable('refresh_tokens', {
             id: {
                 type: Sequelize.UUID,
                 allowNull: false,

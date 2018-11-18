@@ -15,7 +15,7 @@ passport.use("bearer", new Strategy(
                     return done(null, false);
                 }
 
-                User.findById(accessToken.userID)
+                User.findByPk(accessToken.userID)
                     .then(user => {
 
                         if (!user) {

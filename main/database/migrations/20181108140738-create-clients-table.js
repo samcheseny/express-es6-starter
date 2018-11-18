@@ -7,15 +7,18 @@ module.exports = {
             id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.UUID
+                type: Sequelize.UUID,
+                unique: true
             },
             name: {
                 type: Sequelize.STRING,
-                allowNull: true
+                allowNull: false,
+                unique: true
             },
             secret: {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: false,
+                unique: true
             },
             active: {
                 type: Sequelize.BOOLEAN,

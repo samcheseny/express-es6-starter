@@ -3,18 +3,13 @@ const utils = require('../utils');
 
 class User extends Sequelize.Model {
 
-    constructor() {
-        super();
-    }
-
     static init(sequelize, DataTypes) {
         return super.init(
             {
                 id: {
                     type: DataTypes.UUID,
                     allowNull: false,
-                    primaryKey: true,
-                    defaultValue: () => utils.generateUUID()
+                    primaryKey: true
                 },
                 clientID: {
                     type: DataTypes.UUID,
@@ -27,9 +22,8 @@ class User extends Sequelize.Model {
                 name: {
                     type: DataTypes.STRING,
                     allowNull: false,
+                    field: "name",
                     validate: {
-                        is: /^[a-z]+$/i,
-                        notNull: true,
                         notEmpty: true,
                     }
                 },
@@ -38,8 +32,7 @@ class User extends Sequelize.Model {
                     allowNull: false,
                     validate: {
                         isEmail: true,
-                        notNull: true,
-                        notEmpty: true,
+                        notEmpty: true,//todo remove now as default type
                     }
                 },
                 password: {
@@ -52,13 +45,11 @@ class User extends Sequelize.Model {
                 createdAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW,
                     field: 'created_at'
                 },
                 updatedAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW,
                     field: 'updated_at'
                 }
             },
@@ -72,17 +63,18 @@ class User extends Sequelize.Model {
     static associate(models) {
 
         this.client = this.belongsTo(models.Client, {
-            foreignKey: 'client_id',
-            onDelete: 'CASCADE'
+            foreignKey: 'clientID',
+            onDelete: 'CASCADE',
+            as: 'client'
         });
 
         this.accessTokens = this.hasMany(models.AccessToken, {
-            foreignKey: 'user_id',
+            foreignKey: 'userID',
             as: 'accessTokens'
         });
 
         this.refreshTokens = this.hasMany(models.RefreshToken, {
-            foreignKey: 'user_id',
+            foreignKey: 'userID',
             as: 'refreshTokens'
         });
 

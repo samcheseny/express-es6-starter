@@ -1,5 +1,6 @@
 const {User, AccessToken, RefreshToken} = require('../models');
 const bcrypt = require('bcryptjs');
+const utils = require('../utils');
 
 class UsersController {
 
@@ -23,14 +24,15 @@ class UsersController {
                     return response.status(400).send(error);
                 }
 
-                let user = {
+                let user = new User({
+                    id: utils.generateUUID(),
+                    clientID: request.body.clientID,
                     name: request.body.name,
                     email: request.body.email,
-                    clientID: request.body.clientID,
                     password: hash,
-                };
+                });
 
-                return User.create(user)
+                return user.save()
                     .then(user => response.status(201).json(user))
                     .catch(error => response.status(400).send(error));
 

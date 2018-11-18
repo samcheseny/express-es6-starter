@@ -7,7 +7,8 @@ module.exports = {
             id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.UUID
+                type: Sequelize.UUID,
+                unique: true
             },
             clientID: {
                 type: Sequelize.UUID,
@@ -22,7 +23,8 @@ module.exports = {
             },
             email: {
                 type: Sequelize.STRING,
-                allowNull: false
+                allowNull: false,
+                unique:true
             },
             password: {
                 type: Sequelize.STRING,

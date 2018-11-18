@@ -1,11 +1,6 @@
 const {Sequelize} = require('sequelize');
-const utils = require('../utils');
 
 class Client extends Sequelize.Model {
-
-    constructor() {
-        super();
-    }
 
     static init(sequelize, DataTypes) {
         return super.init(
@@ -13,14 +8,12 @@ class Client extends Sequelize.Model {
                 id: {
                     type: DataTypes.UUID,
                     allowNull: false,
-                    primaryKey: true,
-                    defaultValue: () => utils.generateUUID()
+                    primaryKey: true
                 },
                 name: {
                     type: DataTypes.STRING,
                     allowNull: true,
                     validate: {
-                        notNull: true,
                         notEmpty: true,
                     }
                 },
@@ -28,7 +21,6 @@ class Client extends Sequelize.Model {
                     type: DataTypes.STRING,
                     allowNull: false,
                     validate: {
-                        notNull: true,
                         notEmpty: true,
                     }
                 },
@@ -40,13 +32,11 @@ class Client extends Sequelize.Model {
                 createdAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW,
                     field: 'created_at'
                 },
                 updatedAt: {
                     type: DataTypes.DATE,
                     allowNull: false,
-                    defaultValue: DataTypes.NOW,
                     field: 'updated_at'
                 }
             },
@@ -60,17 +50,17 @@ class Client extends Sequelize.Model {
     static associate(models) {
 
         this.users = this.hasMany(models.User, {
-            foreignKey: 'client_id',
+            foreignKey: 'clientID',
             as: 'users'
         });
 
         this.accessTokens = this.hasMany(models.AccessToken, {
-            foreignKey: 'client_id',
+            foreignKey: 'clientID',
             as: 'accessTokens'
         });
 
         this.refreshTokens = this.hasMany(models.RefreshToken, {
-            foreignKey: 'client_id',
+            foreignKey: 'clientID',
             as: 'refreshTokens'
         });
 
